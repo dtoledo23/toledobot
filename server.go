@@ -2,7 +2,6 @@ package main
 
 import (
   "os"
-  "fmt"
   "log"
   "net/http"
   "strings"
@@ -21,7 +20,7 @@ func main() {
   // Run server.
   // Address = HOST:PORT
   address := strings.Join([]string{os.Getenv("HOST"), os.Getenv("PORT")}, ":")
-  fmt.Println("ToledoBot running on ", address)
+  log.Println("ToledoBot running on ", address)
   log.Fatal(http.ListenAndServe(address, routes.Router()))
 
 }
