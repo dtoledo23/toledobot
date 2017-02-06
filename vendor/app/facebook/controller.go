@@ -4,10 +4,11 @@ import (
   "fmt"
 )
 
-func HandleMessageEvent(message Message) {
+func HandleMessageEvent(message ReceivedMessage, sender Recipient) {
   fmt.Println("I received a message:", message.Text)
+  SendText(sender, message.Text)
 }
 
-func HandlePostbackEvent(postback Postback) {
+func HandlePostbackEvent(postback ReceivedPostback, sender Recipient) {
   fmt.Println("I received a message:", postback.Payload)
 }

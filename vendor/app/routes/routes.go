@@ -11,7 +11,7 @@ import (
 func Router() *httprouter.Router {
     router := httprouter.New()
 
-    // Route
+    // Root
     router.GET("/", func (w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
         fmt.Fprint(w, "Hi! I am ToledoBot up and running\n")
     })
