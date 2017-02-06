@@ -2,10 +2,13 @@ package main
 
 import (
   "fmt"
-  "app/facebook"
+  "log"
+  "app/routes"
+  "net/http"
 )
 
 func main() {
-    facebook.SayHi()
-    fmt.Println(facebook.Hi)
+
+    // Run server.
+    log.Fatal(http.ListenAndServe(":8080", routes.Router()))
 }
