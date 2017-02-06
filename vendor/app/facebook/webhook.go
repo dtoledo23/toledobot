@@ -14,9 +14,8 @@ import (
 func WebhookValidation(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
   VERIFY_TOKEN := os.Getenv("FB_VERIFY_TOKEN")
   query := r.URL.Query()
-
   if (query.Get("hub.mode") == "subscribe") &&
-    (query.Get("verify_token") == VERIFY_TOKEN) {
+    (query.Get("hub.verify_token") == VERIFY_TOKEN) {
     log.Println("Validating webhook")
     w.WriteHeader(http.StatusOK)
     fmt.Fprintf(w, query.Get("hub.challenge"))
@@ -27,11 +26,10 @@ func WebhookValidation(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 }
 
 func EventHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	var event FacebookEvent
+	var event ReceivedPayload
 
   // Parse JSON
-  decoder := json.NewDecoder(r.Body)
-  err := decoder.Decode(&event)
+  err := json.NewDecoder(r.Body).Decode(&event)
 	if err != nil {
     // Respond to Facebook no matter what.
     w.WriteHeader(http.StatusOK)
@@ -48,15 +46,14 @@ func EventHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
       // Handle all events received.
       for _, event := range entry.Messaging {
-        fmt.Println(event.Message, event.Message.Empty())
         // Received message
         if !event.Message.Empty() {
-          HandleMessageEvent(event.Message)
+          HandleMessageEvent(event.Message, event.Sender)
         }
 
         // Received Postback
         if !event.Postback.Empty() {
-          HandlePostbackEvent(event.Postback)
+          HandlePostbackEvent(event.Postback, event.Sender)
         }
       }
     }
