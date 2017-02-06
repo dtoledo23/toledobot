@@ -17,8 +17,8 @@ func Router() *httprouter.Router {
     })
 
     // Facebook webhook
-    router.GET("/facebook/index", facebook.Index)
-    router.GET("/facebook/hello/:name", facebook.Hello)
+    router.GET("/facebook/webhook", facebook.WebhookValidation)
+    router.POST("/facebook/webhook", facebook.EventHandler)
 
     return router
 }
