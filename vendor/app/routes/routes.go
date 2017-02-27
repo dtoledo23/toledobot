@@ -1,24 +1,29 @@
 package routes
 
 import (
-  "fmt"
-  "net/http"
-  "app/facebook"
-  "github.com/julienschmidt/httprouter"
+	"app/platforms/facebook"
+	"app/platforms/sockets"
+	"fmt"
+	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 )
 
-// Define API routes
+// Router defines API routes
 func Router() *httprouter.Router {
-    router := httprouter.New()
+	router := httprouter.New()
 
-    // Root
-    router.GET("/", func (w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-        fmt.Fprint(w, "Hi! I am ToledoBot up and running\n")
-    })
+	// Root
+	router.GET("/", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+		fmt.Fprint(w, "Hi! I am ToledoBot up and running\n")
+	})
 
-    // Facebook webhook
-    router.GET("/facebook/webhook", facebook.WebhookValidation)
-    router.POST("/facebook/webhook", facebook.EventHandler)
+	// Facebook webhook
+	router.GET("/facebook/webhook", facebook.WebhookValidation)
+	router.POST("/facebook/webhook", facebook.EventHandler)
 
-    return router
+	// Sockets webhook
+	router.GET("/ws/webhook", sockets.ServeWs)
+
+	return router
 }
