@@ -30,6 +30,21 @@ func HandleMessage(message string, sender platforms.Sender) {
 	case "schedule":
 		response = "Lunes a Sabado de 9:00am a 7:00pm"
 
+	case "thanks":
+		response = "No te preocupes"
+
+	case "bye":
+		response= "adios! :)"
+
+	case "ok":
+		response="Chido"
+
+	case "insult":
+		response= "Oye tranquilo viejo"
+
+	case "memo":
+		response="Pongase a programar 😎"
+
 	default:
 		response = "Lo siento. No pude entender."
 	}
