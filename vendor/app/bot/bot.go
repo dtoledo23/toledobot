@@ -2,7 +2,7 @@ package bot
 
 import (
 	"app/platforms"
-	"fmt"
+	"log"
 )
 
 const (
@@ -17,7 +17,7 @@ type answer struct {
 
 // HandleMessage defines what to do when receiving a message.
 func HandleMessage(message string, sender platforms.Sender) {
-	fmt.Println("Ill do my best to answer to ", message)
+	log.Println("Received:", message)
 	var response string
 
 	switch entities := getEntities(message); entities["intent"] {
@@ -34,16 +34,16 @@ func HandleMessage(message string, sender platforms.Sender) {
 		response = "No te preocupes"
 
 	case "bye":
-		response= "adios! :)"
+		response = "adios! :)"
 
 	case "ok":
-		response="Chido"
+		response = "Chido"
 
 	case "insult":
-		response= "Oye tranquilo viejo"
+		response = "Oye tranquilo viejo"
 
 	case "memo":
-		response="Pongase a programar 😎"
+		response = "Pongase a programar 😎"
 
 	default:
 		response = "Lo siento. No pude entender."
