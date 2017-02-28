@@ -28,7 +28,7 @@ func HandleMessage(message string, sender platforms.Sender) {
 		response = "Paseo del Hospicio #22, San Juan de Dios 44360 Guadalajara local 2151"
 
 	case "schedule":
-		response = "Lunes a Sabado de 9:00am a 7:00pm"
+		response = "Lunes a Sabado de 9:00am a 7:00pm 🕐"
 
 	case "thanks":
 		response = "No te preocupes"
@@ -44,6 +44,27 @@ func HandleMessage(message string, sender platforms.Sender) {
 
 	case "memo":
 		response = "Pongase a programar 😎"
+
+	case "originOfBot":
+		response = "Para que quieres saber eso jaja saludos"
+
+	case "laugh":
+		response="😂😂😂😂😂😂😂😂😂😂😂😂"
+	
+	case "joke":
+		response="PHP 🤔"
+
+	case "affirmation":
+		response="Simon 🤠"
+
+	case "negation":
+		response="Nelson 😵"
+	
+	case "sing":
+		response="Tum tum tum tum tum tum tum tum tum tuuuuuuuuuuuum tiriririririri tum tum 🥁"
+
+	case "memoResponse":
+		response="pongase a programar usted 🤓"
 
 	default:
 		response = "Lo siento. No pude entender."
