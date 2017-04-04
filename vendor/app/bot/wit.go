@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 )
 
 const (
@@ -19,10 +18,10 @@ type witMessage struct {
 	} `json:"entities"`
 }
 
-func getEntities(message string) map[string]string {
+func getEntities(message, token string) map[string]string {
 	entities := make(map[string]string)
 
-	witResponse, err := callWitAPI(message)
+	witResponse, err := callWitAPI(message, token)
 	if err != nil {
 		log.Println(err)
 		return nil
@@ -46,7 +45,7 @@ func getEntities(message string) map[string]string {
 	return entities
 }
 
-func callWitAPI(message string) (*witMessage, error) {
+func callWitAPI(message, token string) (*witMessage, error) {
 	// Build request
 	q := url.Values{}
 	q.Add("q", message)
@@ -59,7 +58,7 @@ func callWitAPI(message string) (*witMessage, error) {
 	}
 
 	req, err := http.NewRequest("GET", url.String(), nil)
-	req.Header.Add("Authorization", "Bearer "+os.Getenv("WIT_TOKEN"))
+	req.Header.Add("Authorization", "Bearer "+token)
 
 	if err != nil {
 		return nil, err
