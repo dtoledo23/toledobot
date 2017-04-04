@@ -1,9 +1,11 @@
 package sockets
 
 import (
-	"fmt"
-
 	"app/bot"
+	"fmt"
+	"log"
+
+	"encoding/json"
 
 	"github.com/gorilla/websocket"
 )
@@ -13,7 +15,7 @@ func handleSocket(conn *websocket.Conn) error {
 	defer client.conn.Close()
 
 	for {
-		messageType, message, err := conn.ReadMessage()
+		messageType, rawMessage, err := conn.ReadMessage()
 		if err != nil {
 			return err
 		}
@@ -22,24 +24,10 @@ func handleSocket(conn *websocket.Conn) error {
 			return fmt.Errorf("%s", "Message type not supported")
 		}
 
-		bot.HandleMessage(string(message[:]), client)
-	}
-}
+		var message socketsMessage
+		json.Unmarshal(rawMessage, &message)
 
-func handleSocketIO(conn *websocket.Conn) error {
-	client := &Client{conn}
-	defer client.conn.Close()
-
-	for {
-		messageType, message, err := conn.ReadMessage()
-		if err != nil {
-			return err
-		}
-
-		if messageType != websocket.TextMessage {
-			return fmt.Errorf("%s", "Message type not supported")
-		}
-
-		bot.HandleMessage(string(message[:]), client)
+		log.Printf("Received WebSocket message from user %s: %s", message.UserID, message.Payload)
+		bot.HandleMessage(message.Payload, message.UserID, client)
 	}
 }
