@@ -7,6 +7,8 @@ import (
 	"os"
 	"strings"
 
+	"app/dbProvider"
+
 	"github.com/joho/godotenv"
 )
 
@@ -16,6 +18,8 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
+	dbProvider.Connect()
 
 	// Run server.
 	// Address = HOST:PORT

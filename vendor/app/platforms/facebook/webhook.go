@@ -49,7 +49,7 @@ func EventHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 			for _, event := range entry.Messaging {
 				// Received message
 				if !event.Message.Empty() {
-					handleMessageEvent(event.Message, event.Sender)
+					handleMessageEvent(event, event.Sender)
 				}
 
 				// Received Postback
